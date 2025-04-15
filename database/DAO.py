@@ -14,7 +14,7 @@ class DAO():
         result = []
 
         cursor = conn.cursor(dictionary=True)
-        query = """ ADD YOUR QUERY """
+        query = """ SELECT * FROM NERC """
 
         cursor.execute(query)
 
@@ -32,7 +32,10 @@ class DAO():
         result = []
 
         cursor = conn.cursor(dictionary=True)
-        query = """ ADD YOUR QUERY """
+        query = """ select *
+                    from poweroutages 
+                    where nerc_id =%s
+                    order by id DESC"""
 
         cursor.execute(query, (nerc.id,))
 
@@ -47,3 +50,7 @@ class DAO():
         cursor.close()
         conn.close()
         return result
+
+if __name__ == '__main__':
+    my_DAO=DAO.getAllEvents(Nerc(1,"ERCOT"))
+    print(my_DAO)

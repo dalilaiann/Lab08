@@ -1,3 +1,4 @@
+import math
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -49,6 +50,10 @@ class Event:
     @property
     def date_event_finished(self):
         return self._date_event_finished
+
+    def ore_disservizio(self):
+        time= (self._date_event_finished-self._date_event_began).days*24+(self._date_event_finished-self._date_event_began).seconds/3600
+        return time
 
     @property
     def demand_loss(self):

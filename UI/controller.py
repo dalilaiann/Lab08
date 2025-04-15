@@ -13,8 +13,17 @@ class Controller:
         self.fillIDMap()
 
     def handleWorstCase(self, e):
-        # TO FILL
-        pass
+        self._view._txtOut.controls.clear()
+        results=self._model.worstCase(self._idMap.get(self._view._ddNerc.value), int(self._view._txtYears.value), int(self._view._txtHours.value))
+        if results is None:
+            self._view._txtOut.controls.append(ft.Text("Non esiste worst case per lo scenario indicato"))
+            self._view.update_page()
+        else:
+            self._view._txtOut.controls.append(ft.Text(f"Tot people affected: {results[1]}"))
+            self._view._txtOut.controls.append(ft.Text(f"Tot hours of outage: {results[2]}"))
+            for result in results[0]:
+                self._view._txtOut.controls.append(ft.Text(result))
+            self._view.update_page()
 
     def fillDD(self):
         nercList = self._model.listNerc
