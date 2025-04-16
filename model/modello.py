@@ -25,7 +25,7 @@ class Model:
         if len(self._listEvents)==0:
             return None
         else:
-            self._ricorsione([],maxY, maxH, self._listEvents)
+            self._ricorsione([],maxY, maxH, 0)
             return self._solBest, self.affetti_Tot, self._totOre
 
     def pazienti_affetti(self, parziale):
@@ -64,17 +64,17 @@ class Model:
         else:
             return False
 
-    def _ricorsione(self, parziale, maxY, maxH, pos):
+    def _ricorsione(self, parziale, maxY, maxH, i):
         """algoritmo ricorsivo che esplora tutte le soluzioni ammissibili"""
         if self.pazienti_affetti(parziale) > self.affetti_Tot:
             self._solBest = copy.deepcopy(parziale)
             self.affetti_Tot = self.pazienti_affetti(parziale)
             self._totOre = self.calcola_ore(parziale)
 
-        for i in range(0,len(pos)):
-            if self.is_admisible(parziale, maxY, maxH, pos[i]):
-                parziale.append(pos[i])
-                self._ricorsione(parziale, maxY, maxH, pos[i+1:])
+        for j in range(i, len(self._listEvents)):
+            if self.is_admisible(parziale, maxY, maxH, self._listEvents[j]):
+                parziale.append(self._listEvents[j])
+                self._ricorsione(parziale, maxY, maxH, j+1)
                 parziale.pop()
 
     def loadEvents(self, nerc):
